@@ -9,8 +9,19 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onView:fileSelector"
+  ],
   "main": "./dist/extension.js",
+  "menus": {
+      "view/title": [
+        {
+          "command": "shafupt.getSelectedFiles",
+          "when": "view == fileSelector",
+          "group": "navigation"
+        }
+      ]
+    },
   "contributes": {
     "commands": [
       {
@@ -21,7 +32,15 @@
         "command": "shafupt.gibFiles",
         "title": "Gib Files"
       }
-    ]
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "fileSelector",
+          "name": "File Selector"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
