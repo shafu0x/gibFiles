@@ -8,7 +8,11 @@ I wanna get the text of some files to copy/paste into chat-gpt directly. This wo
 
 Then run `> Gib Files` to copy the text inside all selected files into your clipboard.
 
-<img src="docs/list-of-files.png" alt="List of Files" height="320">
+### Demo
+
+Here is a quick demo of how to use the extension:
+
+<video src="docs/list-of-files.mov" controls height="320"></video>
 
 ### Installation
 
