@@ -38,33 +38,36 @@ export class FileTreeDataProvider implements vscode.TreeDataProvider<FileItem> {
     const uri = vscode.Uri.file(dirPath);
     const entries = await vscode.workspace.fs.readDirectory(uri);
 
-    return entries.map(([name, type]) => {
-      const fullPath = path.join(dirPath, name);
-      const isDirectory = type === vscode.FileType.Directory;
+    return entries
+        .filter(([name, _]) => !name.startsWith('.')) // Exclude hidden files
+        .map(([name, type]) => {
+            const fullPath = path.join(dirPath, name);
+            const isDirectory = type === vscode.FileType.Directory;
 
-      const fileItem = new FileItem(
-        name,
-        isDirectory ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None,
-        fullPath,
-        isDirectory
-      );
+            const fileItem = new FileItem(
+                name,
+                isDirectory ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None,
+                fullPath,
+                isDirectory
+            );
 
-      // Set an icon to simulate a checkbox
-      const isSelected = this.selectedFiles.has(fullPath);
-      fileItem.iconPath = isSelected
-        ? new vscode.ThemeIcon('check') // Checked icon
-        : new vscode.ThemeIcon('circle-outline'); // Unchecked icon
+            // Set an icon to simulate a checkbox
+            const isSelected = this.selectedFiles.has(fullPath);
+            fileItem.iconPath = isSelected
+                ? new vscode.ThemeIcon('check') // Checked icon
+                : new vscode.ThemeIcon('circle-outline'); // Unchecked icon
 
-      // Attach the toggleSelection command to both files and directories
-      fileItem.command = {
-        command: 'fileSelector.toggleSelection',
-        title: '',
-        arguments: [fileItem],
-      };
+            // Attach the toggleSelection command to both files and directories
+            fileItem.command = {
+                command: 'fileSelector.toggleSelection',
+                title: '',
+                arguments: [fileItem],
+            };
 
-      return fileItem;
-    });
-  }
+            return fileItem;
+        });
+}
+
 
   public async toggleSelection(fileItem: FileItem) {
     const fullPath = fileItem.resourceUri.fsPath;
@@ -95,35 +98,35 @@ export class FileTreeDataProvider implements vscode.TreeDataProvider<FileItem> {
 
   private async selectAllInDirectory(uri: vscode.Uri) {
     const entries = await vscode.workspace.fs.readDirectory(uri);
-    for (const [name, type] of entries) {
+    for (const [name, type] of entries.filter(([name, _]) => !name.startsWith('.'))) { // Exclude hidden files
+        const childUri = vscode.Uri.joinPath(uri, name);
+        const childPath = childUri.fsPath;
+
+        if (type === vscode.FileType.Directory) {
+            this.selectedFiles.add(childPath);
+            await this.selectAllInDirectory(childUri);
+        } else if (type === vscode.FileType.File) {
+            this.selectedFiles.add(childPath);
+        }
+        // Ignore other types
+    }
+}
+
+private async deselectAllInDirectory(uri: vscode.Uri) {
+  const entries = await vscode.workspace.fs.readDirectory(uri);
+  for (const [name, type] of entries.filter(([name, _]) => !name.startsWith('.'))) { // Exclude hidden files
       const childUri = vscode.Uri.joinPath(uri, name);
       const childPath = childUri.fsPath;
 
       if (type === vscode.FileType.Directory) {
-        this.selectedFiles.add(childPath);
-        await this.selectAllInDirectory(childUri);
+          this.selectedFiles.delete(childPath);
+          await this.deselectAllInDirectory(childUri);
       } else if (type === vscode.FileType.File) {
-        this.selectedFiles.add(childPath);
+          this.selectedFiles.delete(childPath);
       }
       // Ignore other types
-    }
   }
-
-  private async deselectAllInDirectory(uri: vscode.Uri) {
-    const entries = await vscode.workspace.fs.readDirectory(uri);
-    for (const [name, type] of entries) {
-      const childUri = vscode.Uri.joinPath(uri, name);
-      const childPath = childUri.fsPath;
-
-      if (type === vscode.FileType.Directory) {
-        this.selectedFiles.delete(childPath);
-        await this.deselectAllInDirectory(childUri);
-      } else if (type === vscode.FileType.File) {
-        this.selectedFiles.delete(childPath);
-      }
-      // Ignore other types
-    }
-  }
+}
 
   public async getSelectedFiles(): Promise<string[]> {
     const files: string[] = [];
