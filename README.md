@@ -12,7 +12,7 @@ Then run `> Gib Files` to copy the text inside all selected files into your clip
 
 ### Installation
 
-I'm not going through the marketplace bs to publish this in the extension store.
+I'm not going through the microsoft bs to publish this in the extension store.
 
 You will have to manually install this. Download the `shafupaste-0.0.1.vsix` file and run
 
@@ -20,3 +20,4 @@ You will have to manually install this. Download the `shafupaste-0.0.1.vsix` fil
 > code --install-extension shafuPaste-0.1.0.vsix
 ```
 
+or build from scratch. 
