@@ -12,7 +12,7 @@ Then run `> Gib Files` to copy the text inside all selected files into your clip
 
 Here is a quick demo of how to use the extension:
 
-[![Demo Video](https://img.youtube.com/vi/D9H8tUHFD7Y/0.jpg)](https://youtu.be/D9H8tUHFD7Y)
+[![shafuPaste](https://img.youtube.com/vi/D9H8tUHFD7Y/0.jpg)](https://youtu.be/D9H8tUHFD7Y?autoplay=1)
 
 ### Installation
 
