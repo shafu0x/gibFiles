@@ -19,10 +19,10 @@ export function activate(context: vscode.ExtensionContext) {
 
   const getSelectedFiles = vscode.commands.registerCommand('shafupt.gibFiles', async () => {
     const selectedFiles = fileTreeDataProvider.getSelectedFiles();
-    if (selectedFiles.length > 0) {
+    if ((await selectedFiles).length > 0) {
       try {
         // Read contents of selected files
-        const fileContentsPromises = selectedFiles.map(async (filePath) => {
+        const fileContentsPromises = (await selectedFiles).map(async (filePath) => {
           const uri = vscode.Uri.file(filePath);
           const fileData = await vscode.workspace.fs.readFile(uri);
           const fileContent = new TextDecoder('utf-8').decode(fileData);
