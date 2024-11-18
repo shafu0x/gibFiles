@@ -1,6 +1,6 @@
 {
-  "name": "shafupt",
-  "displayName": "shafuPT",
+  "name": "shafupaste",
+  "displayName": "shafuPaste",
   "description": "Use shafu for better AI stuff",
   "version": "0.0.1",
   "engines": {
@@ -9,6 +9,10 @@
   "categories": [
     "Other"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shafu0x/gibFiles"
+  }, 
   "activationEvents": [
     "onView:fileSelector"
   ],
@@ -16,7 +20,7 @@
   "menus": {
       "view/title": [
         {
-          "command": "shafupt.getSelectedFiles",
+          "command": "shafupaste.getSelectedFiles",
           "when": "view == fileSelector",
           "group": "navigation"
         }
@@ -25,11 +29,11 @@
   "contributes": {
     "commands": [
       {
-        "command": "shafupt.helloWorld",
+        "command": "shafupaste.helloWorld",
         "title": "Hello World"
       },
       {
-        "command": "shafupt.gibFiles",
+        "command": "shafupaste.gibFiles",
         "title": "Gib Files"
       }
     ],

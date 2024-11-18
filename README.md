@@ -1,4 +1,4 @@
-# shafupt README
+# shafupaste README
 
 I built this for myself. So use accordingly bro.
 

@@ -2,10 +2,10 @@ import * as vscode from 'vscode';
 import { FileTreeDataProvider } from './fileTreeDataProvider'; // Adjust the import path as needed
 
 export function activate(context: vscode.ExtensionContext) {
-  console.log('Congratulations, your extension "shafupt" is now active!');
+  console.log('Congratulations, your extension "shafupaste" is now active!');
 
-  const disposable = vscode.commands.registerCommand('shafupt.helloWorld', () => {
-    vscode.window.showInformationMessage('Hello World from shafuPT!');
+  const disposable = vscode.commands.registerCommand('shafupaste.helloWorld', () => {
+    vscode.window.showInformationMessage('Hello World from shafupaste!');
   });
 
   context.subscriptions.push(disposable);
@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
     fileTreeDataProvider.toggleSelection(item);
   });
 
-  const getSelectedFiles = vscode.commands.registerCommand('shafupt.gibFiles', async () => {
+  const getSelectedFiles = vscode.commands.registerCommand('shafupaste.gibFiles', async () => {
     const selectedFiles = fileTreeDataProvider.getSelectedFiles();
     if ((await selectedFiles).length > 0) {
       try {
