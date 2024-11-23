@@ -1,15 +1,7 @@
 import * as vscode from 'vscode';
-import { FileTreeDataProvider } from './fileTreeDataProvider'; // Adjust the import path as needed
+import { FileTreeDataProvider } from './fileTreeDataProvider'; 
 
 export function activate(context: vscode.ExtensionContext) {
-  console.log('Congratulations, your extension "shafupaste" is now active!');
-
-  const disposable = vscode.commands.registerCommand('shafupaste.helloWorld', () => {
-    vscode.window.showInformationMessage('Hello World from shafupaste!');
-  });
-
-  context.subscriptions.push(disposable);
-
   const fileTreeDataProvider = new FileTreeDataProvider();
   vscode.window.registerTreeDataProvider('fileSelector', fileTreeDataProvider);
 
